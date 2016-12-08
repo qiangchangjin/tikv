@@ -1476,16 +1476,14 @@ fn test_free_stuck_candidate_with_check_quorum() {
 
     assert_eq!(&nt.peers[&2].state, StateRole::Follower);
     assert_eq!(&nt.peers[&3].state, StateRole::Candidate);
-    assert_eq!(&nt.peers[&3].term,
-               &nt.peers[&2].term + 1);
+    assert_eq!(&nt.peers[&3].term, &nt.peers[&2].term + 1);
 
     // Vote again for safety
     nt.send(vec![new_message(3, 3, MessageType::MsgHup, 0)]);
 
     assert_eq!(&nt.peers[&2].state, StateRole::Follower);
     assert_eq!(&nt.peers[&3].state, StateRole::Candidate);
-    assert_eq!(&nt.peers[&3].term,
-               &nt.peers[&2].term + 2);
+    assert_eq!(&nt.peers[&3].term, &nt.peers[&2].term + 2);
 
     nt.recover();
     let mut msg = new_message(1, 3, MessageType::MsgHeartbeat, 0);
@@ -1494,8 +1492,7 @@ fn test_free_stuck_candidate_with_check_quorum() {
 
     // Disrupt the leader so that the stuck peer is freed
     assert_eq!(&nt.peers[&1].state, StateRole::Follower);
-    assert_eq!(&nt.peers[&3].term,
-               &nt.peers[&1].term);
+    assert_eq!(&nt.peers[&3].term, &nt.peers[&1].term);
 }
 
 #[test]
